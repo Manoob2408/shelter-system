@@ -1,0 +1,15 @@
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\repository\AnimalRepository.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\config\DataSeeder.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\model\Vaccine.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\dto\DiseaseDTO.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\model\Animal.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\model\Disease.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\config\WebConfig.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\dto\StatsDTO.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\dto\AnimalDTO.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\dto\VaccineDTO.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\controller\AnimalController.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\service\AnimalService.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\repository\DiseaseRepository.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\AnimalShelterApplication.java
+C:\Users\Windows\Desktop\shelter-system\backend\src\main\java\com\shelter\repository\VaccineRepository.java
