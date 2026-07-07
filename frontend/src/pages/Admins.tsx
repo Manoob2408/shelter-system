@@ -13,6 +13,25 @@ export function Admins() {
     const { admin: me } = useAuth();
     const [admins, setAdmins] = useState<AdminInfo[]>([]);
     const [loading, setLoading] = useState(true);
+    const [form, setForm] = useState({ name: '', email: '', password: '' });
+    const [creating, setCreating] = useState(false);
+    const [formError, setFormError] = useState('');
+
+    const handleCreate = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (form.password.length < 6) { setFormError('Senha mínima de 6 caracteres.'); return; }
+        setCreating(true);
+        try {
+            await authService.register(form.name, form.email, form.password);
+            setForm({ name: '', email: '', password: '' });
+            setFormError('');
+            load(); // recarrega a lista
+        } catch {
+            setFormError('E-mail já cadastrado ou dados inválidos.');
+        } finally {
+            setCreating(false);
+        }
+    };
 
     const load = () => {
         setLoading(true);
@@ -130,13 +149,59 @@ export function Admins() {
                 )}
             </div>
 
-            {/* Info box */}
-            <div className="bg-blue-50 border border-blue-100 rounded-2xl p-4 text-sm text-blue-700">
-                <p className="font-medium mb-1">ℹ️ Como adicionar novos administradores</p>
-                <p className="text-blue-600 text-xs leading-relaxed">
-                    Compartilhe o link do sistema e peça para a pessoa criar uma conta na tela de <strong>Cadastro</strong>.
-                    Novas contas são criadas com o papel de <strong>Admin</strong> por padrão.
-                </p>
+            {/* Formulário de novo admin */}
+            <div className="bg-white rounded-2xl border border-gray-100 p-6">
+                <h2 className="font-semibold text-gray-900 text-sm mb-4">Adicionar administrador</h2>
+                {formError && (
+                    <div className="mb-4 text-sm text-red-600 bg-red-50 border border-red-100 rounded-xl px-4 py-3">
+                        {formError}
+                    </div>
+                )}
+                <form onSubmit={handleCreate} className="grid grid-cols-3 gap-3">
+                    <div>
+                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">Nome</label>
+                        <input
+                            type="text"
+                            required
+                            value={form.name}
+                            onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                            placeholder="Nome completo"
+                            className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">E-mail</label>
+                        <input
+                            type="email"
+                            required
+                            value={form.email}
+                            onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
+                            placeholder="email@exemplo.com"
+                            className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">Senha</label>
+                        <input
+                            type="password"
+                            required
+                            value={form.password}
+                            onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
+                            placeholder="Mínimo 6 caracteres"
+                            className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                        />
+                    </div>
+                    <div className="col-span-3 flex justify-end mt-1">
+                        <button
+                            type="submit"
+                            disabled={creating}
+                            className="flex items-center gap-2 bg-green-600 hover:bg-green-700 disabled:opacity-60 text-white px-5 py-2.5 rounded-xl text-sm font-medium transition-colors"
+                        >
+                            <UserPlus className="w-4 h-4" />
+                            {creating ? 'Cadastrando...' : 'Cadastrar administrador'}
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );
