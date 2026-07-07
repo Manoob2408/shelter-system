@@ -1,18 +1,19 @@
 package com.shelter.config;
 
+import com.shelter.model.Admin;
 import com.shelter.model.Animal;
 import com.shelter.model.Disease;
 import com.shelter.model.Vaccine;
+import com.shelter.repository.AdminRepository;
 import com.shelter.repository.AnimalRepository;
 import com.shelter.repository.DiseaseRepository;
 import com.shelter.repository.VaccineRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -21,9 +22,22 @@ public class DataSeeder implements CommandLineRunner {
     private final AnimalRepository animalRepository;
     private final VaccineRepository vaccineRepository;
     private final DiseaseRepository diseaseRepository;
+    private final AdminRepository adminRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
+        // Seed default super admin
+        if (!adminRepository.existsByEmail("admin@patafeliz.com")) {
+            Admin superAdmin = new Admin();
+            superAdmin.setName("Administrador");
+            superAdmin.setEmail("admin@patafeliz.com");
+            superAdmin.setPassword(passwordEncoder.encode("admin123"));
+            superAdmin.setRole(Admin.Role.SUPER_ADMIN);
+            adminRepository.save(superAdmin);
+            System.out.println(">>> Admin padrão criado: admin@patafeliz.com / admin123");
+        }
+
         if (animalRepository.count() > 0) return;
 
         // Dog 1
